@@ -11,6 +11,7 @@ import panel.models.ace  # noqa: F401
 from uit import Client, UITError
 
 logger = logging.getLogger(__name__)
+pn.extension(raw_css=['.bk.panel-file-listing option:hover { background-color: #dcf0fd; }'])
 
 
 class FileManager(param.Parameterized):
@@ -262,7 +263,7 @@ class FileBrowser(param.Parameterized):
     def stop_loading(self):
         if self.file_listing_widget is not None:
             self.file_listing_widget.css_classes = ['uit-loading']
-            self.file_listing_widget.css_classes = []
+            self.file_listing_widget.css_classes = ['panel-file-listing']
             # self.file_listing_widget.param.trigger('css_classes')
 
     def do_callback(self, changed=True):
@@ -338,7 +339,7 @@ class FileBrowser(param.Parameterized):
     @param.depends('_disabled')
     def panel(self):
         self.file_listing_widget = pn.widgets.MultiSelect.from_param(
-            self.param.file_listing, height=200, width_policy='max'
+            self.param.file_listing, height=200, width_policy='max', css_classes=['panel-file-listing']
         )
         widgets = pn.Param(
             self, parameters=self.controls + ['path_text'], widgets=self.control_styles, show_name=False,
