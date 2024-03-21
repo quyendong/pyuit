@@ -354,9 +354,9 @@ class HpcSubmit(PbsScriptInputs, PbsScriptAdvancedInputs):
     def execution_block(self):
         return ''
 
-    @param.depends('job_name', 'environment_variables', watch=True)
-    def is_submitable(self):
-        self.error_messages[:] = []
+    @param.depends('job_name', watch=True)
+    def is_submitable(self, error_messages: list=None):
+        self.error_messages[:] = error_messages or []
         if not self.job_name:
             self.error_messages.append(
                 pn.pane.Alert('* You must first enter a Job Name above before you can proceed.',
